@@ -24,6 +24,7 @@ final class MessagesSpringBootTest
         pipeline.run(supplier, consumer);
     }
 
+
     @Test
     void action_one_test(@Autowired final MessageAction actionOne)
     {
@@ -34,5 +35,15 @@ final class MessagesSpringBootTest
     void action_two_test(@Autowired final MessageAction actionTwo)
     {
         actionTwo.run();
+    }
+
+    
+    @Autowired
+    private MessageAction defaultAction;
+
+    @Test
+    void component()
+    {
+        defaultAction.run();
     }
 }
