@@ -5,6 +5,7 @@ import com.marekdudek.springcert.messages.interfaces.MessageConsumer;
 import com.marekdudek.springcert.messages.interfaces.MessageSupplier;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +16,9 @@ import java.util.stream.IntStream;
 @Builder
 public final class RunCountOfTimesAction implements MessageAction
 {
+    @NonNull
     private final MessageSupplier supplier;
+    @NonNull
     private final MessageConsumer consumer;
     private final int count;
 
