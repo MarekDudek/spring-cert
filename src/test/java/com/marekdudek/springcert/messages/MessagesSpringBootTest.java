@@ -22,4 +22,10 @@ final class MessagesSpringBootTest
     {
         pipeline.run(supplier, consumer);
     }
+
+    @Test
+    void test(@Autowired final Runnable action)
+    {
+        action.run();
+    }
 }

@@ -29,4 +29,10 @@ class MessagesConfig
     {
         return new RunCountOfTimesPipeline(3);
     }
+
+    @Bean
+    Runnable action()
+    {
+        return () -> pipeline().run(supplier(), consumer());
+    }
 }
