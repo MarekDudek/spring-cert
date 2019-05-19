@@ -1,6 +1,6 @@
 package com.marekdudek.springcert.messages;
 
-import com.marekdudek.springcert.messages.implementations.DefaultAction;
+import com.marekdudek.springcert.messages.implementations.RunCountOfTimesAction;
 import com.marekdudek.springcert.messages.interfaces.MessageConsumer;
 import com.marekdudek.springcert.messages.interfaces.MessageSupplier;
 import org.junit.jupiter.api.Test;
@@ -11,16 +11,15 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-final class DefaultActionTest
+final class RunCountOfTimesActionTest
 {
     @MockBean
     private MessageSupplier supplier;
     @MockBean
     private MessageConsumer consumer;
 
-
     @Autowired
-    private DefaultAction action;
+    private RunCountOfTimesAction runCountOfTimesAction;
 
     @Test
     void test()
@@ -28,7 +27,7 @@ final class DefaultActionTest
         // given
         when(supplier.message()).thenReturn("msg");
         // when
-        action.run();
+        runCountOfTimesAction.run();
         // then
         verify(supplier, times(3)).message();
         verify(consumer, times(3)).render("msg");

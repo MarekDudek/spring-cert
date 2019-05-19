@@ -2,10 +2,9 @@ package com.marekdudek.springcert.messages;
 
 import com.marekdudek.springcert.messages.implementations.ConstMessageSupplier;
 import com.marekdudek.springcert.messages.implementations.PrintStreamMessageConsumer;
-import com.marekdudek.springcert.messages.implementations.RunCountOfTimesPipeline;
+import com.marekdudek.springcert.messages.implementations.RunCountOfTimesAction;
 import com.marekdudek.springcert.messages.interfaces.MessageAction;
 import com.marekdudek.springcert.messages.interfaces.MessageConsumer;
-import com.marekdudek.springcert.messages.interfaces.MessagePipeline;
 import com.marekdudek.springcert.messages.interfaces.MessageSupplier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -24,9 +23,21 @@ class MessagesConfig
     private int count;
 
     @Bean
+    String message()
+    {
+        return message;
+    }
+
+    @Bean
+    Integer count()
+    {
+        return count;
+    }
+
+    @Bean
     MessageSupplier supplier()
     {
-        return new ConstMessageSupplier(message);
+        return new ConstMessageSupplier(message());
     }
 
     @Bean
@@ -35,21 +46,16 @@ class MessagesConfig
         return new PrintStreamMessageConsumer(System.out);
     }
 
-    @Bean
-    MessagePipeline pipeline()
-    {
-        return new RunCountOfTimesPipeline(count);
-    }
 
     @Bean
     MessageAction actionOne()
     {
-        return () -> pipeline().run(supplier(), consumer());
+        return new RunCountOfTimesAction(supplier(), consumer(), count());
     }
 
     @Bean
     MessageAction actionTwo()
     {
-        return () -> pipeline().run(supplier(), consumer());
+        return new RunCountOfTimesAction(supplier(), consumer(), count());
     }
 }
