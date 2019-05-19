@@ -1,5 +1,6 @@
 package com.marekdudek.springcert.messages;
 
+import com.marekdudek.springcert.messages.interfaces.MessageAction;
 import com.marekdudek.springcert.messages.interfaces.MessageConsumer;
 import com.marekdudek.springcert.messages.interfaces.MessagePipeline;
 import com.marekdudek.springcert.messages.interfaces.MessageSupplier;
@@ -24,13 +25,13 @@ final class MessagesSpringBootTest
     }
 
     @Test
-    void action_one_test(@Autowired final Runnable actionOne)
+    void action_one_test(@Autowired final MessageAction actionOne)
     {
         actionOne.run();
     }
 
     @Test
-    void action_two_test(@Autowired final Runnable actionTwo)
+    void action_two_test(@Autowired final MessageAction actionTwo)
     {
         actionTwo.run();
     }

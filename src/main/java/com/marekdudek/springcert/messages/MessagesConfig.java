@@ -3,6 +3,7 @@ package com.marekdudek.springcert.messages;
 import com.marekdudek.springcert.messages.implementations.ConstMessageSupplier;
 import com.marekdudek.springcert.messages.implementations.PrintStreamMessageConsumer;
 import com.marekdudek.springcert.messages.implementations.RunCountOfTimesPipeline;
+import com.marekdudek.springcert.messages.interfaces.MessageAction;
 import com.marekdudek.springcert.messages.interfaces.MessageConsumer;
 import com.marekdudek.springcert.messages.interfaces.MessagePipeline;
 import com.marekdudek.springcert.messages.interfaces.MessageSupplier;
@@ -31,16 +32,14 @@ class MessagesConfig
     }
 
     @Bean
-    Runnable actionOne()
+    MessageAction actionOne()
     {
-        System.out.println("action 1");
         return () -> pipeline().run(supplier(), consumer());
     }
 
     @Bean
-    Runnable actionTwo()
+    MessageAction actionTwo()
     {
-        System.out.println("action 2");
         return () -> pipeline().run(supplier(), consumer());
     }
 }
