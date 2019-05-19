@@ -18,9 +18,10 @@ public final class RunCountOfTimesPipeline implements MessagePipeline
     public void run(final MessageSupplier supplier, final MessageConsumer consumer)
     {
         IntStream.range(0, count).forEach(i ->
-        {
-            final String message = supplier.message();
-            consumer.render(message);
-        });
+                {
+                    final String message = supplier.message();
+                    consumer.render(message);
+                }
+        );
     }
 }

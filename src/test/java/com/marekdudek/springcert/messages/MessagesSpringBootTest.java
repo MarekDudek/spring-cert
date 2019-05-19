@@ -37,7 +37,7 @@ final class MessagesSpringBootTest
         actionTwo.run();
     }
 
-    
+
     @Autowired
     private MessageAction defaultAction;
 
