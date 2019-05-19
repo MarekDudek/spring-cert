@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
+import java.io.PrintStream;
+
 @Configuration
 @PropertySource("classpath:/messages.properties")
 class MessagesConfig
@@ -26,6 +28,12 @@ class MessagesConfig
     String message()
     {
         return message;
+    }
+
+    @Bean
+    PrintStream printStream()
+    {
+        return System.out;
     }
 
     @Bean
@@ -45,7 +53,6 @@ class MessagesConfig
     {
         return new PrintStreamMessageConsumer(System.out);
     }
-
 
     @Bean
     MessageAction actionOne()
