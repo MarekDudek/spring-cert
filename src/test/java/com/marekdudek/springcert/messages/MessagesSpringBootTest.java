@@ -24,8 +24,14 @@ final class MessagesSpringBootTest
     }
 
     @Test
-    void test(@Autowired final Runnable action)
+    void action_one_test(@Autowired final Runnable actionOne)
     {
-        action.run();
+        actionOne.run();
+    }
+
+    @Test
+    void action_two_test(@Autowired final Runnable actionTwo)
+    {
+        actionTwo.run();
     }
 }

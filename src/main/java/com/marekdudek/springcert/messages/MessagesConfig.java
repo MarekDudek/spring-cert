@@ -31,8 +31,16 @@ class MessagesConfig
     }
 
     @Bean
-    Runnable action()
+    Runnable actionOne()
     {
+        System.out.println("action 1");
+        return () -> pipeline().run(supplier(), consumer());
+    }
+
+    @Bean
+    Runnable actionTwo()
+    {
+        System.out.println("action 2");
         return () -> pipeline().run(supplier(), consumer());
     }
 }
