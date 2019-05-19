@@ -8,7 +8,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.PrintStream;
 
-import static com.marekdudek.springcert.messages.implementations.MessagesTestConstants.MESSAGE;
+import static com.marekdudek.springcert.messages.MessagesTestConstants.MESSAGE;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)

@@ -4,7 +4,7 @@ import com.marekdudek.springcert.messages.interfaces.MessageSupplier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 
-import static com.marekdudek.springcert.messages.implementations.MessagesTestConstants.MESSAGE;
+import static com.marekdudek.springcert.messages.MessagesTestConstants.MESSAGE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 final class ConstMessageSupplierTest

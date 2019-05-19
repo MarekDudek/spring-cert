@@ -10,8 +10,8 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static com.marekdudek.springcert.messages.implementations.MessagesTestConstants.MESSAGE;
-import static com.marekdudek.springcert.messages.implementations.MessagesTestConstants.THREE;
+import static com.marekdudek.springcert.messages.MessagesTestConstants.MESSAGE;
+import static com.marekdudek.springcert.messages.MessagesTestConstants.THREE;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
