@@ -1,33 +1,38 @@
 package com.marekdudek.springcert.messages;
 
+import com.marekdudek.springcert.messages.implementations.RunCountOfTimesAction;
 import com.marekdudek.springcert.messages.interfaces.MessageAction;
 import com.marekdudek.springcert.messages.interfaces.MessageConsumer;
 import com.marekdudek.springcert.messages.interfaces.MessageSupplier;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 final class MessagesTest
 {
+    @Mock
+    private MessageSupplier supplier;
+    @Mock
+    private MessageConsumer consumer;
 
-
-    @Autowired
-    private MessageAction action;
+    private static final String MESSAGE = "message";
+    private static final int TIMES = 3;
 
     @Test
     void test()
     {
-        // given
-        //when(supplier.message()).thenReturn("msg");
+        given(supplier.message()).willReturn(MESSAGE);
         // when
+        final MessageAction action = new RunCountOfTimesAction(supplier, consumer, TIMES);
         action.run();
         // then
-        //verify(supplier, times(3)).message();
-        //verify(consumer, times(3)).render("msg");
-        //verifyNoMoreInteractions(supplier, consumer);
+        verify(supplier, times(TIMES)).message();
+        verify(consumer, times(TIMES)).render(MESSAGE);
     }
 }
