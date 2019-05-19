@@ -7,16 +7,26 @@ import com.marekdudek.springcert.messages.interfaces.MessageAction;
 import com.marekdudek.springcert.messages.interfaces.MessageConsumer;
 import com.marekdudek.springcert.messages.interfaces.MessagePipeline;
 import com.marekdudek.springcert.messages.interfaces.MessageSupplier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 @Configuration
+@PropertySource("classpath:/messages.properties")
 class MessagesConfig
 {
+
+    @Value("${messages.message}")
+    private String message;
+
+    @Value("${messages.count}")
+    private int count;
+
     @Bean
     MessageSupplier supplier()
     {
-        return new ConstMessageSupplier("some message");
+        return new ConstMessageSupplier(message);
     }
 
     @Bean
@@ -28,7 +38,7 @@ class MessagesConfig
     @Bean
     MessagePipeline pipeline()
     {
-        return new RunCountOfTimesPipeline(3);
+        return new RunCountOfTimesPipeline(count);
     }
 
     @Bean
