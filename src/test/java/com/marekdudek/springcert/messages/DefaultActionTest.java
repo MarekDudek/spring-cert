@@ -32,5 +32,6 @@ final class DefaultActionTest
         // then
         verify(supplier, times(3)).message();
         verify(consumer, times(3)).render("msg");
+        verifyNoMoreInteractions(supplier, consumer);
     }
 }
