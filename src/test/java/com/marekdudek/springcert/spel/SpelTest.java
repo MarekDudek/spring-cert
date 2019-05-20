@@ -11,15 +11,14 @@ final class SpelTest
 {
     @Autowired
     private Source source;
-
     @Autowired
     private Target target;
 
     @Test
     void source()
     {
-        assertThat(source.getName()).isEqualTo("Out of the blue");
-        assertThat(source.getNumber()).isEqualTo(42);
+        assertThat(source.name).isEqualTo("Out of the blue");
+        assertThat(source.number).isEqualTo(42);
     }
 
     @Test

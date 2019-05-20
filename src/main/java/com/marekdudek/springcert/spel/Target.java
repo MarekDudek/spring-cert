@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor(onConstructor = @_(@Autowired))
-public class Target
+public final class Target
 {
     @Value("#{source.name}")
     public final String name;
