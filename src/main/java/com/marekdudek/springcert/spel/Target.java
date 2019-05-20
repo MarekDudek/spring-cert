@@ -12,6 +12,9 @@ public final class Target
     @Value("#{source.name}")
     public final String name;
 
-    @Value("#{source.number}")
+    @Value("#{2 * source.number + 1}")
     public final int number;
+
+    @Value("#{'Hello'.concat(', World!')}")
+    public final String string;
 }

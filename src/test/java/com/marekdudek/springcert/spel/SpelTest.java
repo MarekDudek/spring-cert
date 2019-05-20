@@ -21,6 +21,7 @@ final class SpelTest
     void test()
     {
         assertThat(target.name).isEqualTo(source.name);
-        assertThat(target.number).isEqualTo(source.number);
+        assertThat(target.number).isEqualTo(2 * source.number + 1);
+        assertThat(target.string).isEqualTo("Hello, World!");
     }
 }
