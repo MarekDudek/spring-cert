@@ -9,22 +9,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 final class SpelTest
 {
-    @Autowired
-    private Source source;
+    // System under test
     @Autowired
     private Target target;
 
-    @Test
-    void source()
-    {
-        assertThat(source.name).isEqualTo("Out of the blue");
-        assertThat(source.number).isEqualTo(42);
-    }
+
+    @Autowired
+    private Source source;
 
     @Test
-    void target()
+    void test()
     {
-        assertThat(target.name).isEqualTo("Out of the blue");
-        assertThat(target.number).isEqualTo(42);
+        assertThat(target.name).isEqualTo(source.name);
+        assertThat(target.number).isEqualTo(source.number);
     }
 }
