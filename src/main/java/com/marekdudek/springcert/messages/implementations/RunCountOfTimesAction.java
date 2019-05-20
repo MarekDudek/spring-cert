@@ -20,6 +20,7 @@ public final class RunCountOfTimesAction implements MessageAction
     private final MessageSupplier supplier;
     @NonNull
     private final MessageConsumer consumer;
+    @NonNull
     private final int count;
 
     @Override
