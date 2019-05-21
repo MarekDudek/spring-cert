@@ -2,17 +2,11 @@ package com.marekdudek.springcert.hierarchy;
 
 import org.springframework.context.annotation.Bean;
 
-class ConfigOne
+class ConfigTwo
 {
     @Bean
     String one()
     {
-        return "alpha";
-    }
-
-    @Bean
-    String two()
-    {
-        return "beta";
+        return "gamma";
     }
 }
