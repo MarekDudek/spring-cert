@@ -17,9 +17,8 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 final class MessagesConfigTest
 {
-    // System under test
     @Autowired
-    private MessageAction action;
+    private MessageAction action; // System under test
 
     @MockBean
     private MessageSupplier supplier;

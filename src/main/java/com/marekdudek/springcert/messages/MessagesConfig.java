@@ -1,13 +1,15 @@
 package com.marekdudek.springcert.messages;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 
 import java.io.PrintStream;
 
-@Configuration
+@SpringBootConfiguration
+@ComponentScan
 @PropertySource("classpath:/messages.properties")
 class MessagesConfig
 {

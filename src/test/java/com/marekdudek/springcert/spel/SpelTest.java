@@ -9,9 +9,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 final class SpelTest
 {
-    // System under test
     @Autowired
-    private Target target;
+    private Target target; // System under test
 
 
     @Autowired
