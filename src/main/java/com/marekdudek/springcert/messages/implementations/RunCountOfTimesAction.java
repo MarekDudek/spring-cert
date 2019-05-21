@@ -6,22 +6,26 @@ import com.marekdudek.springcert.messages.interfaces.MessageSupplier;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NonNull;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.stream.IntStream;
 
+import static lombok.AccessLevel.PUBLIC;
+
 @Component
 @AllArgsConstructor(onConstructor = @_(@Autowired))
 @Builder
+@FieldDefaults(level = PUBLIC, makeFinal = true)
 public final class RunCountOfTimesAction implements MessageAction
 {
     @NonNull
-    private final MessageSupplier supplier;
+    MessageSupplier supplier;
     @NonNull
-    private final MessageConsumer consumer;
+    MessageConsumer consumer;
     @NonNull
-    private final int count;
+    int count;
 
     @Override
     public void run()
