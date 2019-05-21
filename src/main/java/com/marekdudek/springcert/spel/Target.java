@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor(onConstructor = @_(@Autowired))
 public final class Target
 {
-    @Value("#{source.name}")
+    @Value("#{source.name.toUpperCase()}")
     public final String name;
 
     @Value("#{2 * source.number + 1}")

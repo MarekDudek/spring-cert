@@ -20,7 +20,7 @@ final class SpelTest
     @Test
     void test()
     {
-        assertThat(target.name).isEqualTo(source.name);
+        assertThat(target.name).isEqualTo(source.name.toUpperCase());
         assertThat(target.number).isEqualTo(2 * source.number + 1);
         assertThat(target.string).isEqualTo("Hello, World!");
     }
