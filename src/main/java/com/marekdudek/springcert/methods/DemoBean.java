@@ -2,7 +2,7 @@ package com.marekdudek.springcert.methods;
 
 interface DemoBean
 {
-    Singer getSinger();
+    Singer supplier();
 
     void doSomething();
 }

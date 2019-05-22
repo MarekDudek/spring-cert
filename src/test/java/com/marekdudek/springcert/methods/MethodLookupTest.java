@@ -1,10 +1,11 @@
 package com.marekdudek.springcert.methods;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.RepetitionInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.stream.IntStream;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class MethodLookupTest
@@ -12,12 +13,14 @@ class MethodLookupTest
     @Autowired
     private DemoBean demoBean;
 
-    @Test
-    void test()
+    @RepeatedTest(10)
+    void test(final RepetitionInfo info)
     {
-        IntStream.range(1, 10).
-                forEach(i ->
-                        demoBean.doSomething()
-                );
+        // when
+        demoBean.doSomething();
+        // then
+
+        assertThat(LookupDemoBean.InstancesCount).isEqualTo(1);
+        assertThat(Singer.InstancesCount).isEqualTo(info.getCurrentRepetition());
     }
 }

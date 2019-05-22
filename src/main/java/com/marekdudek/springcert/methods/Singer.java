@@ -3,15 +3,15 @@ package com.marekdudek.springcert.methods;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.util.Random;
-
 import static java.lang.System.out;
 
 @Component
 @Scope("prototype")
 class Singer
 {
-    private final int number = new Random().nextInt();
+    static int InstancesCount = 0;
+
+    final int number = ++InstancesCount;
 
     void sing()
     {
