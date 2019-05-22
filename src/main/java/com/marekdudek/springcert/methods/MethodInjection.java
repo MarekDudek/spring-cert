@@ -5,6 +5,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootConfiguration
 @ComponentScan
-class MethodsConfig
+class MethodInjection
 {
 }

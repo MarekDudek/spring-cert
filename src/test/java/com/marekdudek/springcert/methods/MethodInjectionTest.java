@@ -8,18 +8,19 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class MethodLookupTest
+class MethodInjectionTest
 {
     @Autowired
-    private LookupDemoBean demoBean;
+    private Utilizer utilizer; // System under test
+
 
     @RepeatedTest(10)
     void test(final RepetitionInfo info)
     {
         // when
-        final int singerNumber = demoBean.doSomething();
+        final Product product = utilizer.supplier();
         // then
-        assertThat(singerNumber).isEqualTo(info.getCurrentRepetition());
-        assertThat(demoBean.number).isEqualTo(1);
+        assertThat(product.number).isEqualTo(info.getCurrentRepetition());
+        assertThat(utilizer.number).isEqualTo(1);
     }
 }
