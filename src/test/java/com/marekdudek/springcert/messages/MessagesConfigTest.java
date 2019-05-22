@@ -1,5 +1,8 @@
 package com.marekdudek.springcert.messages;
 
+import com.marekdudek.springcert.messages.implementations.ConstMessageSupplier;
+import com.marekdudek.springcert.messages.implementations.PrintStreamMessageConsumer;
+import com.marekdudek.springcert.messages.implementations.RunCountOfTimesAction;
 import com.marekdudek.springcert.messages.interfaces.MessageAction;
 import com.marekdudek.springcert.messages.interfaces.MessageConsumer;
 import com.marekdudek.springcert.messages.interfaces.MessageSupplier;
@@ -11,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static com.marekdudek.springcert.messages.MessagesTestConstants.MESSAGE;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
@@ -46,5 +50,14 @@ final class MessagesConfigTest
         order.verify(supplier).message();
         order.verify(consumer).render(MESSAGE);
         verifyNoMoreInteractions(supplier, consumer);
+    }
+
+    @Test
+    void types()
+    {
+        // then
+        assertThat(action).isExactlyInstanceOf(RunCountOfTimesAction.class);
+        assertThat(supplier).isNotExactlyInstanceOf(ConstMessageSupplier.class);
+        assertThat(consumer).isNotExactlyInstanceOf(PrintStreamMessageConsumer.class);
     }
 }

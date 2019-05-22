@@ -22,5 +22,7 @@ final class SpelTest
         assertThat(target.name).isEqualTo(source.name.toUpperCase());
         assertThat(target.number).isEqualTo(2 * source.number + 1);
         assertThat(target.string).isEqualTo("Hello, World!");
+        assertThat(target).isInstanceOf(Target.class);
+        assertThat(source).isInstanceOf(Source.class);
     }
 }
