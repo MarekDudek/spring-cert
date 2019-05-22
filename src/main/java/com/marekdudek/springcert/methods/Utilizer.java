@@ -8,15 +8,12 @@ import static lombok.AccessLevel.PACKAGE;
 
 @Component
 @FieldDefaults(level = PACKAGE, makeFinal = true)
-class Utilizer
+abstract class Utilizer
 {
     private static int COUNT = 0;
 
     int number = ++COUNT;
 
     @Lookup
-    Product supplier()
-    {
-        return null;
-    }
+    abstract Product supplier();
 }
