@@ -10,7 +10,7 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROT
 @Component
 @Scope(value = SCOPE_PROTOTYPE)
 @FieldDefaults(level = PACKAGE, makeFinal = true)
-class Product
+final class Product
 {
     private static int COUNT = 0;
 
