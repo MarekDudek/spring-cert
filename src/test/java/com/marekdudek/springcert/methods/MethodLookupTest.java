@@ -11,16 +11,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 class MethodLookupTest
 {
     @Autowired
-    private DemoBean demoBean;
+    private LookupDemoBean demoBean;
 
     @RepeatedTest(10)
     void test(final RepetitionInfo info)
     {
         // when
-        demoBean.doSomething();
+        final int singerNumber = demoBean.doSomething();
         // then
-
-        assertThat(LookupDemoBean.InstancesCount).isEqualTo(1);
-        assertThat(Singer.InstancesCount).isEqualTo(info.getCurrentRepetition());
+        assertThat(singerNumber).isEqualTo(info.getCurrentRepetition());
+        assertThat(demoBean.number).isEqualTo(1);
     }
 }

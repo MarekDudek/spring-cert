@@ -4,5 +4,5 @@ interface DemoBean
 {
     Singer supplier();
 
-    void doSomething();
+    int doSomething();
 }
