@@ -89,4 +89,28 @@ class CollectionInjectionConfig
         props.put("three", "3");
         return props;
     }
+
+    @Bean
+    Long oneLong()
+    {
+        return 7L;
+    }
+
+    @Bean
+    Long twoLong()
+    {
+        return 8L;
+    }
+
+    @Bean
+    Long threeLong()
+    {
+        return 9L;
+    }
+
+    @Bean
+    List<Long> listOfLongs()
+    {
+        return ImmutableList.of(4L, 5L, 6L);
+    }
 }

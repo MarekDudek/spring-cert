@@ -49,4 +49,11 @@ class CollectionInjectionTest
     {
         assertThat(bean.properties).containsOnly(entry("one", "1"), entry("two", "2"), entry("three", "3"));
     }
+
+    @Test
+    @DisplayName("All beans of type in config are injected to collection of this type in class")
+    void list_injection_differently()
+    {
+        assertThat(bean.longList).containsExactly(7L, 8L, 9L);
+    }
 }
