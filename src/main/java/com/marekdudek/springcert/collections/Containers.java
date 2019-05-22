@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import static lombok.AccessLevel.PUBLIC;
@@ -23,4 +24,8 @@ class Containers
     List<Integer> integerList;
 
     Map<Integer, Integer> integerToIntegerMap;
+
+    Map rawMapOfIntegerToInteger;
+
+    Properties properties;
 }
