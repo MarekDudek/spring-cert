@@ -17,4 +17,10 @@ class LifecycleConfig
     {
         return new Wheel();
     }
+
+    @Bean
+    Chain chain()
+    {
+        return new Chain();
+    }
 }

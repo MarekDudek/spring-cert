@@ -14,8 +14,14 @@ class LifecycleTest
 
 
     @Test
-    void test()
+    void bean_name_properly_set()
     {
         assertThat(cycling.name).isEqualTo("cycling");
+    }
+
+    @Test
+    void dependent_bean_set_on_dependency()
+    {
+        cycling.wheel.setCycling(cycling); // TODO: lack of it is not detected by test
     }
 }

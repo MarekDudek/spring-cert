@@ -6,12 +6,12 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
 class Wheel implements ApplicationContextAware
 {
-
     private ApplicationContext ctx;
 
     @Override
@@ -27,11 +27,24 @@ class Wheel implements ApplicationContextAware
 
         try
         {
-            ctx.getBean("cycling");
+            ctx.getBean(Cycling.class);
         }
         catch (final BeanCurrentlyInCreationException e)
         {
             // intentionally left blank
         }
+    }
+
+    private Cycling cycling;
+
+    void setCycling(final Cycling cycling)
+    {
+        this.cycling = cycling;
+    }
+
+    @PreDestroy
+    void preDestroy()
+    {
+        checkArgument(cycling.stopped);
     }
 }

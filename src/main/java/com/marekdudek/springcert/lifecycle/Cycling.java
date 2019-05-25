@@ -33,19 +33,21 @@ class Cycling implements BeanNameAware, ApplicationContextAware, InitializingBea
 
 
     @Override
-    public void setApplicationContext(final ApplicationContext applicationContext)
+    public void setApplicationContext(final ApplicationContext ctx)
     {
         checkNotNull(name);
-        this.applicationContext = applicationContext;
+        context = ctx;
+
+        context.getBean(Chain.class); // TODO: how come this not fails?
     }
 
-    private ApplicationContext applicationContext;
+    private ApplicationContext context;
 
 
     @PostConstruct
     void postConstruct()
     {
-        checkNotNull(applicationContext);
+        checkNotNull(context);
         constructed = true;
     }
 
@@ -97,5 +99,5 @@ class Cycling implements BeanNameAware, ApplicationContextAware, InitializingBea
         stopped = true;
     }
 
-    private boolean stopped;
+    boolean stopped;
 }
