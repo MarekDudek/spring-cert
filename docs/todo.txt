@@ -4,3 +4,5 @@ Bean ids and names
 Aliases and meta-annotations
 Autowiring by name, type, constructor
 Bean priority, qualifiers and overriding
+Lazy initialization
+Bean dependency

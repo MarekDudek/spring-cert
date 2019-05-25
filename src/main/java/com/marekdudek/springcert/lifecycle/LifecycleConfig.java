@@ -9,6 +9,12 @@ class LifecycleConfig
     @Bean(initMethod = "start", destroyMethod = "stop")
     Cycling cycling()
     {
-        return new Cycling("some string");
+        return new Cycling(wheel());
+    }
+
+    @Bean
+    Wheel wheel()
+    {
+        return new Wheel();
     }
 }

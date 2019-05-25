@@ -19,13 +19,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
 class Cycling implements BeanNameAware, ApplicationContextAware, InitializingBean, DisposableBean
 {
     @NonNull
-    public final String dependency;
+    public final Wheel wheel;
 
 
     @Override
     public void setBeanName(final String name)
     {
-        checkNotNull(dependency);
+        checkNotNull(wheel);
         this.name = name;
     }
 
