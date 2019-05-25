@@ -22,9 +22,10 @@ public final class RunCountOfTimesAction implements MessageAction
 {
     @NonNull
     MessageSupplier supplier;
+
     @NonNull
     MessageConsumer consumer;
-    @NonNull
+
     int count;
 
     @Override
