@@ -2,7 +2,6 @@ package com.marekdudek.springcert.factories;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
@@ -14,11 +13,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 final class FactoriesTest
 {
     @Autowired
-    @Qualifier("md5")
     private MessageDigest md5;
 
     @Autowired
-    @Qualifier("sha")
     private MessageDigest sha;
 
     @Test
@@ -42,21 +39,20 @@ final class FactoriesTest
     }
 
     @Autowired
-    private Integer number;
+    private Integer integer;
 
     @Autowired
-    @Qualifier("string")
-    private String characters;
+    private String string;
 
     @Test
     void factory_of_numbers()
     {
-        assertThat(number).isEqualTo(12345);
+        assertThat(integer).isEqualTo(12345);
     }
 
     @Test
     void factory_of_strings()
     {
-        assertThat(characters).isEqualTo("quick brown fox jumps over the lazy dog");
+        assertThat(string).isEqualTo("quick brown fox jumps over the lazy dog");
     }
 }

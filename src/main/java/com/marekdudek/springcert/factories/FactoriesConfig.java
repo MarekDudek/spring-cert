@@ -21,19 +21,26 @@ class FactoriesConfig
     }
 
     @Bean
-    PolymorphicFactory integer()
+    PolymorphicFactory<Integer> integer()
     {
-        return new PolymorphicFactory(12345);
+        return new PolymorphicFactory<>(12345);
     }
 
     @Bean
-    PolymorphicFactory string()
+    PolymorphicFactory<String> string()
     {
-        return new PolymorphicFactory("quick brown fox jumps over the lazy dog");
+        return new PolymorphicFactory<>("quick brown fox jumps over the lazy dog");
     }
 
     @Bean
-    String name() {
+    Integer number()
+    {
+        return 42;
+    }
+
+    @Bean
+    String name()
+    {
         return "some name";
     }
 }

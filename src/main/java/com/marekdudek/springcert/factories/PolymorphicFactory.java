@@ -2,17 +2,17 @@ package com.marekdudek.springcert.factories;
 
 import org.springframework.beans.factory.FactoryBean;
 
-final class PolymorphicFactory implements FactoryBean<Object>
+final class PolymorphicFactory<T> implements FactoryBean<T>
 {
-    private final Object instance;
+    private final T instance;
 
-    public PolymorphicFactory(final Object instance)
+    public PolymorphicFactory(final T instance)
     {
         this.instance = instance;
     }
 
     @Override
-    public Object getObject()
+    public T getObject()
     {
         return instance;
     }
