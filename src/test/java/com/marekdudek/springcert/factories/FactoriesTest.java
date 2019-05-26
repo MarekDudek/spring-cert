@@ -40,4 +40,23 @@ final class FactoriesTest
         // then
         assertThat(string).isEqualTo("E5E9FA1BA31ECD1AE84F75CAAA474F3A663F05F4");
     }
+
+    @Autowired
+    private Integer number;
+
+    @Autowired
+    @Qualifier("string")
+    private String characters;
+
+    @Test
+    void factory_of_numbers()
+    {
+        assertThat(number).isEqualTo(12345);
+    }
+
+    @Test
+    void factory_of_strings()
+    {
+        assertThat(characters).isEqualTo("quick brown fox jumps over the lazy dog");
+    }
 }

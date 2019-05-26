@@ -9,14 +9,31 @@ import java.security.NoSuchAlgorithmException;
 class FactoriesConfig
 {
     @Bean
-    MessageDigestFactoryBean md5() throws NoSuchAlgorithmException
+    MessageDigestFactory md5() throws NoSuchAlgorithmException
     {
-        return new MessageDigestFactoryBean("MD5");
+        return new MessageDigestFactory("MD5");
     }
 
     @Bean
-    MessageDigestFactoryBean sha() throws NoSuchAlgorithmException
+    MessageDigestFactory sha() throws NoSuchAlgorithmException
     {
-        return new MessageDigestFactoryBean("SHA");
+        return new MessageDigestFactory("SHA");
+    }
+
+    @Bean
+    PolymorphicFactory integer()
+    {
+        return new PolymorphicFactory(12345);
+    }
+
+    @Bean
+    PolymorphicFactory string()
+    {
+        return new PolymorphicFactory("quick brown fox jumps over the lazy dog");
+    }
+
+    @Bean
+    String name() {
+        return "some name";
     }
 }

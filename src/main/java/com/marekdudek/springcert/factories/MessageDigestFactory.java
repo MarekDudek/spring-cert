@@ -5,11 +5,11 @@ import org.springframework.beans.factory.FactoryBean;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-final class MessageDigestFactoryBean implements FactoryBean<MessageDigest>
+final class MessageDigestFactory implements FactoryBean<MessageDigest>
 {
     private final MessageDigest instance;
 
-    public MessageDigestFactoryBean(final String algorithm) throws NoSuchAlgorithmException
+    public MessageDigestFactory(final String algorithm) throws NoSuchAlgorithmException
     {
         instance = MessageDigest.getInstance(algorithm);
     }
