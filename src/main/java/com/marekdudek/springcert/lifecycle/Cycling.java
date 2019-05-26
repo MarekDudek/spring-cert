@@ -38,7 +38,7 @@ class Cycling implements BeanNameAware, ApplicationContextAware, InitializingBea
         checkNotNull(name);
         context = ctx;
 
-        context.getBean(Chain.class); // TODO: how come this not fails?
+        context.getBean(Chain.class); // TODO: how come this doesn't fail?
     }
 
     private ApplicationContext context;
@@ -51,7 +51,7 @@ class Cycling implements BeanNameAware, ApplicationContextAware, InitializingBea
         constructed = true;
     }
 
-    private boolean constructed;
+    boolean constructed;
 
 
     @Override
@@ -61,7 +61,7 @@ class Cycling implements BeanNameAware, ApplicationContextAware, InitializingBea
         propertiesSet = true;
     }
 
-    private boolean propertiesSet;
+    boolean propertiesSet;
 
 
     void start()
@@ -70,7 +70,7 @@ class Cycling implements BeanNameAware, ApplicationContextAware, InitializingBea
         started = true;
     }
 
-    private boolean started;
+    boolean started;
 
 
     @PreDestroy
@@ -80,7 +80,7 @@ class Cycling implements BeanNameAware, ApplicationContextAware, InitializingBea
         preDestroyed = true;
     }
 
-    private boolean preDestroyed;
+    boolean preDestroyed;
 
 
     @Override
@@ -90,7 +90,7 @@ class Cycling implements BeanNameAware, ApplicationContextAware, InitializingBea
         destroyed = true;
     }
 
-    private boolean destroyed;
+    boolean destroyed;
 
 
     void stop()
