@@ -14,15 +14,19 @@ class LifecycleTest
     @Autowired
     private Cycling cycling;
 
+
+    @Autowired
+    DefaultListableBeanFactory beanFactory;
+
+
     @BeforeEach
     void setUp()
     {
         cycling.wheel.setCycling(cycling); // TODO: lack of it is not detected by test
     }
 
-
     @Test
-    void bean_can_be_manually_finalized(@Autowired final DefaultListableBeanFactory beanFactory)
+    void bean_can_be_manually_finalized()
     {
         // when
         beanFactory.destroySingletons();

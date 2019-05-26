@@ -11,7 +11,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.assertj.AssertableApplicationContext;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.ConfigurableApplicationContext;
+
+import javax.annotation.PostConstruct;
 
 import static com.marekdudek.springcert.messages.MessagesTestConstants.MESSAGE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,6 +33,17 @@ final class MessagesConfigTest
     @MockBean
     private MessageConsumer consumer;
 
+    @Autowired
+    private ConfigurableApplicationContext ctx;
+
+    private AssertableApplicationContext context;
+
+    @PostConstruct
+    void init()
+    {
+        context = AssertableApplicationContext.get(() -> ctx);
+    }
+
     @BeforeEach
     void setUp()
     {
@@ -37,7 +52,7 @@ final class MessagesConfigTest
     }
 
     @Test
-    void test()
+    void action_runs_properly()
     {
         // when
         action.run();
@@ -55,9 +70,18 @@ final class MessagesConfigTest
     @Test
     void types()
     {
-        // then
+        // action
         assertThat(action).isExactlyInstanceOf(RunCountOfTimesAction.class);
+        assertThat(context).getBean(MessageAction.class).isExactlyInstanceOf(RunCountOfTimesAction.class);
+        // supplier
         assertThat(supplier).isNotExactlyInstanceOf(ConstMessageSupplier.class);
+        assertThat(context).getBean(MessageSupplier.class).isNotExactlyInstanceOf(ConstMessageSupplier.class);
+        assertThat(context).hasSingleBean(MessageSupplier.class);
+        assertThat(context).getBeans(MessageSupplier.class).containsOnlyKeys("constMessageSupplier");
+        // consumer
         assertThat(consumer).isNotExactlyInstanceOf(PrintStreamMessageConsumer.class);
+        assertThat(context).getBean(MessageConsumer.class).isNotExactlyInstanceOf(PrintStreamMessageConsumer.class);
+        assertThat(context).hasSingleBean(MessageConsumer.class);
+        assertThat(context).getBeans(MessageConsumer.class).containsOnlyKeys("printStreamMessageConsumer");
     }
 }
