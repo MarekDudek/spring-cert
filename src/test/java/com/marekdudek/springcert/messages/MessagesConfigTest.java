@@ -35,7 +35,6 @@ final class MessagesConfigTest
 
     @Autowired
     private ConfigurableApplicationContext ctx;
-
     private AssertableApplicationContext context;
 
     @PostConstruct
