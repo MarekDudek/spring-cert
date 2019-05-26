@@ -1,22 +1,34 @@
 package com.marekdudek.springcert.factories;
 
 import org.springframework.beans.factory.FactoryBean;
-import org.springframework.stereotype.Component;
 
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
-@Component
-class MessageDigestFactoryBean implements FactoryBean<MessageDigest>
+final class MessageDigestFactoryBean implements FactoryBean<MessageDigest>
 {
+    private final MessageDigest instance;
+
+    public MessageDigestFactoryBean(final String algorithm) throws NoSuchAlgorithmException
+    {
+        instance = MessageDigest.getInstance(algorithm);
+    }
+
     @Override
     public MessageDigest getObject() throws Exception
     {
-        return MessageDigest.getInstance("MD5");
+        return instance;
     }
 
     @Override
     public Class<MessageDigest> getObjectType()
     {
         return MessageDigest.class;
+    }
+
+    @Override
+    public boolean isSingleton()
+    {
+        return true;
     }
 }

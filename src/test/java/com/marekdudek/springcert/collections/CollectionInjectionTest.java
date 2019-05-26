@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
 
 @SpringBootTest
-class CollectionInjectionTest
+final class CollectionInjectionTest
 {
     @Autowired
     private Containers bean; // System under test
