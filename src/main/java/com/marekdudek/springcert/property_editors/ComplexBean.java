@@ -1,9 +1,20 @@
 package com.marekdudek.springcert.property_editors;
 
-import lombok.Data;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.NonNull;
+import lombok.ToString;
 
-@Data
-class ComplexBean
+import java.time.LocalDate;
+
+@Builder
+@EqualsAndHashCode
+@ToString
+final class ComplexBean
 {
-    private final Class clazz;
+    @NonNull
+    public final Class clazz;
+
+    @NonNull
+    public final LocalDate date;
 }
