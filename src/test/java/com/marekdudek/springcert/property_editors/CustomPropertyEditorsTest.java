@@ -23,7 +23,7 @@ final class CustomPropertyEditorsTest
     void complex_bean()
     {
         assertThat(complexBean.clazz).isEqualTo(String.class);
-        assertThat(complexBean.date).isEqualTo(LocalDate.of(1976, 10, 13));
+        assertThat(complexBean.date).isEqualTo(LocalDate.of(2019, 05, 23));
     }
 
     @Test
