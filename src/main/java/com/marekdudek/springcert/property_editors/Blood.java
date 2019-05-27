@@ -1,9 +1,11 @@
 package com.marekdudek.springcert.property_editors;
 
-import lombok.Data;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
 
-@Data
-public class Blood
+@Builder
+@EqualsAndHashCode
+public final class Blood
 {
     public final BloodType type;
     public final RhFactor rh;

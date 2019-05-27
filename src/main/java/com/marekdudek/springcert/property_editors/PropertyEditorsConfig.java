@@ -12,20 +12,25 @@ import org.springframework.context.annotation.PropertySource;
 class PropertyEditorsConfig
 {
 
-   /* @Bean
-    Blood blood(
-            @Value("blood.type") final BloodType type,
-            @Value("blood.rh") final RhFactor rh
-    )
+    @Bean
+    Blood blood
+            (
+                    @Value("${blood.type}") final BloodType type,
+                    @Value("${blood.rh}") final RhFactor rh
+            )
     {
-        return new Blood(type, rh);
-    }*/
+        return Blood.builder().
+                type(type).
+                rh(rh).
+                build();
+    }
 
 
     @Bean
-    ComplexBean complexBean(
-            @Value("${complex.class}") final Class clazz
-    )
+    ComplexBean complexBean
+            (
+                    @Value("${complex.class}") final Class clazz
+            )
     {
         return new ComplexBean(clazz);
     }
