@@ -48,7 +48,7 @@ class CustomPropertyEditorsConfig
             );
 
     @Bean
-    CustomEditorConfigurer configurer()
+    static CustomEditorConfigurer configurer()
     {
         final CustomEditorConfigurer configurer = new CustomEditorConfigurer();
         configurer.setCustomEditors(EDITORS);

@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static java.util.Objects.nonNull;
 
 class Wheel implements ApplicationContextAware
 {
@@ -45,6 +46,7 @@ class Wheel implements ApplicationContextAware
     @PreDestroy
     void preDestroy()
     {
-        checkArgument(cycling.stopped);
+        if (nonNull(cycling))
+            checkArgument(cycling.stopped);
     }
 }
