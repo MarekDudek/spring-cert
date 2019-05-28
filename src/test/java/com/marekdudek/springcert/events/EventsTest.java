@@ -5,8 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationEventPublisher;
-
-import java.util.function.Consumer;
+import org.springframework.context.ApplicationListener;
 
 import static org.mockito.Mockito.verify;
 
@@ -17,7 +16,7 @@ final class EventsTest
     private ApplicationEventPublisher publisher;
 
     @MockBean
-    private Consumer<SomeEvent> consumer;
+    private ApplicationListener<SomeEvent> listener;
 
     @Test
     void test()
@@ -27,6 +26,6 @@ final class EventsTest
         // when
         publisher.publishEvent(event);
         // then
-        verify(consumer).accept(event);
+        verify(listener).onApplicationEvent(event);
     }
 }
