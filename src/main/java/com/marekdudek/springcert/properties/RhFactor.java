@@ -1,4 +1,4 @@
-package com.marekdudek.springcert.property_editors;
+package com.marekdudek.springcert.properties;
 
 public enum  RhFactor
 {

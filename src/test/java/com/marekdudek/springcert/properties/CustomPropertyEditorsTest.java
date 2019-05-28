@@ -1,4 +1,4 @@
-package com.marekdudek.springcert.property_editors;
+package com.marekdudek.springcert.properties;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,8 +6,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 
-import static com.marekdudek.springcert.property_editors.BloodType.AB;
-import static com.marekdudek.springcert.property_editors.RhFactor.Rh_Plus;
+import static com.marekdudek.springcert.properties.BloodType.AB;
+import static com.marekdudek.springcert.properties.RhFactor.Rh_Plus;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest

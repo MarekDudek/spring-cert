@@ -1,4 +1,4 @@
-package com.marekdudek.springcert.property_editors;
+package com.marekdudek.springcert.properties;
 
 import com.google.common.collect.ImmutableMap;
 import org.springframework.beans.factory.annotation.Value;
