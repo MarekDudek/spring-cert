@@ -19,6 +19,9 @@ final class I18nTest
     @Autowired
     private Locale locale;
 
+    @Autowired
+    private Mercury mercury;
+
     @Test
     void localized_message()
     {
@@ -35,5 +38,14 @@ final class I18nTest
         final String message = messageSource.getMessage("argument.required", new Object[]{"heated"}, CHINESE);
         // then
         assertThat(message).isEqualTo("The heated argument is required.");
+    }
+
+    @Test
+    void message_source_aware_component()
+    {
+        // when
+        final String message = mercury.message();
+        // then
+        assertThat(message).isNotBlank();
     }
 }
