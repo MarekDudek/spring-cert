@@ -4,18 +4,17 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.ApplicationEventPublisher;
 
 import java.util.function.Consumer;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 final class EventsTest
 {
     @Autowired
-    private SomePublisher publisher; // system under test
-
+    private ApplicationEventPublisher publisher;
 
     @MockBean
     private Consumer<SomeEvent> consumer;
@@ -23,9 +22,11 @@ final class EventsTest
     @Test
     void test()
     {
+        // given
+        final SomeEvent event = new SomeEvent(publisher);
         // when
-        publisher.publish("some name");
+        publisher.publishEvent(event);
         // then
-        verify(consumer).accept(any(SomeEvent.class));
+        verify(consumer).accept(event);
     }
 }

@@ -1,6 +1,7 @@
 package com.marekdudek.springcert.events;
 
 import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
@@ -16,5 +17,11 @@ class EventsConfig
         return ignored ->
         {
         };
+    }
+
+    @Bean
+    ApplicationListener<SomeEvent> listener(final Consumer<SomeEvent> consumer)
+    {
+        return consumer::accept;
     }
 }
