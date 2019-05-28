@@ -14,7 +14,8 @@ class I18nConfig
     private static final String[] BASE_NAMES =
             new String[]{
                     "format",
-                    "exceptions"
+                    "exceptions",
+                    "non-existent"
             };
 
     @Bean
