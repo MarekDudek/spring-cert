@@ -24,18 +24,8 @@ final class EventsTest
 {
     @Autowired
     private ApplicationEventPublisher publisher;
-
     @MockBean
     private ApplicationListener<SomeEvent> listener;
-
-    @MockBean
-    private Consumer<ContextRefreshedEvent> refreshed;
-    @MockBean
-    private Consumer<ContextStartedEvent> started;
-    @MockBean
-    private Consumer<ContextStoppedEvent> stopped;
-    @MockBean
-    private Consumer<ContextClosedEvent> closed;
 
     @Test
     void test()
@@ -48,25 +38,27 @@ final class EventsTest
         verify(listener).onApplicationEvent(event);
     }
 
-    private static final BeanDefinitionCustomizer DontCustomize =
-            definition ->
-            {
-            };
 
     @Test
+    @SuppressWarnings("unchecked")
     void context_events()
     {
-        // when
+        // given
+        final Consumer<ContextRefreshedEvent> refreshed = mock(Consumer.class);
+        final Consumer<ContextStartedEvent> started = mock(Consumer.class);
+        final Consumer<ContextStoppedEvent> stopped = mock(Consumer.class);
+        final Consumer<ContextClosedEvent> closed = mock(Consumer.class);
+        final InOrder inOrder = inOrder(refreshed, started, stopped, closed);
+        // given
         final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
         context.register(EventsConfig.class);
         context.registerBean("refreshed", Consumer.class, () -> refreshed, DontCustomize);
         context.registerBean("started", Consumer.class, () -> started, DontCustomize);
         context.registerBean("stopped", Consumer.class, () -> stopped, DontCustomize);
         context.registerBean("closed", Consumer.class, () -> closed, DontCustomize);
+        // when
         context.refresh();
         // then
-        final InOrder inOrder = inOrder(refreshed, started, stopped, closed);
-        inOrder.verify(refreshed).accept(argThat(e -> !e.getSource().equals(context)));
         inOrder.verify(refreshed).accept(argThat(e -> e.getSource().equals(context)));
         // when
         context.start();
@@ -80,7 +72,13 @@ final class EventsTest
         context.close();
         // then
         inOrder.verify(closed).accept(argThat(e -> e.getSource().equals(context)));
+        // then
         inOrder.verifyNoMoreInteractions();
         verifyNoMoreInteractions(refreshed, started, stopped, closed);
     }
+
+    private static final BeanDefinitionCustomizer DontCustomize =
+            definition ->
+            {
+            };
 }
