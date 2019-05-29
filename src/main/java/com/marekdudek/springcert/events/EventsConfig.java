@@ -25,17 +25,34 @@ class EventsConfig
 
 
     @Bean
+    ApplicationListener<ContextRefreshedEvent> refreshedListener(final Consumer<ContextRefreshedEvent> refreshedConsumer)
+    {
+        return refreshedConsumer::accept;
+    }
+
+    @Bean
+    ApplicationListener<ContextStartedEvent> startedListener(final Consumer<ContextStartedEvent> startedConsumer)
+    {
+        return startedConsumer::accept;
+    }
+
+    @Bean
+    ApplicationListener<ContextStoppedEvent> stoppedListener(final Consumer<ContextStoppedEvent> stoppedConsumer)
+    {
+        return stoppedConsumer::accept;
+    }
+
+    @Bean
+    ApplicationListener<ContextClosedEvent> closedListener(final Consumer<ContextClosedEvent> closedConsumer)
+    {
+        return closedConsumer::accept;
+    }
+
+    @Bean
     Consumer<ContextRefreshedEvent> refreshedConsumer()
     {
         return ignore();
     }
-
-    @Bean
-    ApplicationListener<ContextRefreshedEvent> refreshedListener(final Consumer<ContextRefreshedEvent> consumer)
-    {
-        return consumer::accept;
-    }
-
 
     @Bean
     Consumer<ContextStartedEvent> startedConsumer()
@@ -44,34 +61,14 @@ class EventsConfig
     }
 
     @Bean
-    ApplicationListener<ContextStartedEvent> startedListener(final Consumer<ContextStartedEvent> consumer)
-    {
-        return consumer::accept;
-    }
-
-
-    @Bean
     Consumer<ContextStoppedEvent> stoppedConsumer()
     {
         return ignore();
     }
 
     @Bean
-    ApplicationListener<ContextStoppedEvent> stoppedListener(final Consumer<ContextStoppedEvent> consumer)
-    {
-        return consumer::accept;
-    }
-
-
-    @Bean
     Consumer<ContextClosedEvent> closedConsumer()
     {
         return ignore();
-    }
-
-    @Bean
-    ApplicationListener<ContextClosedEvent> closedListener(final Consumer<ContextClosedEvent> consumer)
-    {
-        return consumer::accept;
     }
 }

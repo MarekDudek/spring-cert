@@ -2,6 +2,7 @@ package com.marekdudek.springcert.events;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinitionCustomizer;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationEventPublisher;
@@ -11,11 +12,11 @@ import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.ContextStartedEvent;
 import org.springframework.context.event.ContextStoppedEvent;
-import org.springframework.context.support.GenericApplicationContext;
 
 import java.util.function.Consumer;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
@@ -47,21 +48,35 @@ final class EventsTest
         verify(listener).onApplicationEvent(event);
     }
 
+    private static final BeanDefinitionCustomizer DontCustomize =
+            bd ->
+            {
+            };
+
     @Test
     void context_events()
     {
         // when
-        final GenericApplicationContext context = new AnnotationConfigApplicationContext(EventsConfig.class);
+        final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        context.register(EventsConfig.class);
+        context.registerBean("refreshedConsumer", Consumer.class, () -> refreshed, DontCustomize);
+        context.registerBean("startedConsumer", Consumer.class, () -> started, DontCustomize);
+        context.registerBean("stoppedConsumer", Consumer.class, () -> stopped, DontCustomize);
+        context.registerBean("closedConsumer", Consumer.class, () -> closed, DontCustomize);
+        context.refresh();
         // then
-        // verify(refreshed).accept(any(ContextRefreshedEvent.class));
+        verify(refreshed, times(2)).accept(any(ContextRefreshedEvent.class));
         // when
         context.start();
         // then
-        // verify(started).accept(any(ContextStartedEvent.class));
+        verify(started).accept(any(ContextStartedEvent.class));
         // when
         context.stop();
         // then
-        // verify(stopped).accept(any(ContextStoppedEvent.class));
-        // verify(closed).accept(any(ContextClosedEvent.class));
+        verify(stopped).accept(any(ContextStoppedEvent.class));
+        // when
+        context.close();
+        // then
+        verify(closed).accept(any(ContextClosedEvent.class));
     }
 }
