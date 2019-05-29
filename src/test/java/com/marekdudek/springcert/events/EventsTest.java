@@ -15,8 +15,7 @@ import org.springframework.context.event.ContextStoppedEvent;
 
 import java.util.function.Consumer;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
@@ -49,7 +48,7 @@ final class EventsTest
     }
 
     private static final BeanDefinitionCustomizer DontCustomize =
-            bd ->
+            definition ->
             {
             };
 
@@ -65,18 +64,19 @@ final class EventsTest
         context.registerBean("closedConsumer", Consumer.class, () -> closed, DontCustomize);
         context.refresh();
         // then
-        verify(refreshed, times(2)).accept(any(ContextRefreshedEvent.class));
+        verify(refreshed).accept(argThat(event -> !event.getSource().equals(context)));
+        verify(refreshed).accept(argThat(event -> event.getSource().equals(context)));
         // when
         context.start();
         // then
-        verify(started).accept(any(ContextStartedEvent.class));
+        verify(started).accept(argThat(event -> event.getSource().equals(context)));
         // when
         context.stop();
         // then
-        verify(stopped).accept(any(ContextStoppedEvent.class));
+        verify(stopped).accept(argThat(event -> event.getSource().equals(context)));
         // when
         context.close();
         // then
-        verify(closed).accept(any(ContextClosedEvent.class));
+        verify(closed).accept(argThat(event -> event.getSource().equals(context)));
     }
 }

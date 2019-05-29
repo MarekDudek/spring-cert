@@ -1,5 +1,6 @@
 package com.marekdudek.springcert.events;
 
+import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
@@ -10,20 +11,9 @@ import org.springframework.context.event.ContextStoppedEvent;
 
 import java.util.function.Consumer;
 
-import static java.lang.System.out;
-
 @SpringBootConfiguration
-class EventsConfig
+abstract class EventsConfig
 {
-    private static <T> Consumer<T> ignore()
-    {
-        return ignored ->
-        {
-            out.println("ignoring " + ignored);
-        };
-    }
-
-
     @Bean
     ApplicationListener<ContextRefreshedEvent> refreshedListener(final Consumer<ContextRefreshedEvent> refreshedConsumer)
     {
@@ -48,27 +38,25 @@ class EventsConfig
         return closedConsumer::accept;
     }
 
-    @Bean
-    Consumer<ContextRefreshedEvent> refreshedConsumer()
-    {
-        return ignore();
-    }
+
+    @Lookup
+    abstract Consumer<ContextRefreshedEvent> refreshedConsumer();
+
+    @Lookup
+    abstract Consumer<ContextStartedEvent> startedConsumer();
+
+    @Lookup
+    abstract Consumer<ContextStoppedEvent> stoppedConsumer();
+
+    @Lookup
+    abstract Consumer<ContextClosedEvent> closedConsumer();
+
 
     @Bean
-    Consumer<ContextStartedEvent> startedConsumer()
+    static <T> Consumer<T> ignore()
     {
-        return ignore();
-    }
-
-    @Bean
-    Consumer<ContextStoppedEvent> stoppedConsumer()
-    {
-        return ignore();
-    }
-
-    @Bean
-    Consumer<ContextClosedEvent> closedConsumer()
-    {
-        return ignore();
+        return ignored ->
+        {
+        };
     }
 }
