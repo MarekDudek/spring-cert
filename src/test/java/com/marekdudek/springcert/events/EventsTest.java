@@ -1,6 +1,7 @@
 package com.marekdudek.springcert.events;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.InOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinitionCustomizer;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,7 +17,7 @@ import org.springframework.context.event.ContextStoppedEvent;
 import java.util.function.Consumer;
 
 import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 final class EventsTest
@@ -58,25 +59,28 @@ final class EventsTest
         // when
         final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
         context.register(EventsConfig.class);
-        context.registerBean("refreshedConsumer", Consumer.class, () -> refreshed, DontCustomize);
-        context.registerBean("startedConsumer", Consumer.class, () -> started, DontCustomize);
-        context.registerBean("stoppedConsumer", Consumer.class, () -> stopped, DontCustomize);
-        context.registerBean("closedConsumer", Consumer.class, () -> closed, DontCustomize);
+        context.registerBean("refreshed", Consumer.class, () -> refreshed, DontCustomize);
+        context.registerBean("started", Consumer.class, () -> started, DontCustomize);
+        context.registerBean("stopped", Consumer.class, () -> stopped, DontCustomize);
+        context.registerBean("closed", Consumer.class, () -> closed, DontCustomize);
         context.refresh();
         // then
-        verify(refreshed).accept(argThat(event -> !event.getSource().equals(context)));
-        verify(refreshed).accept(argThat(event -> event.getSource().equals(context)));
+        final InOrder inOrder = inOrder(refreshed, started, stopped, closed);
+        inOrder.verify(refreshed).accept(argThat(e -> !e.getSource().equals(context)));
+        inOrder.verify(refreshed).accept(argThat(e -> e.getSource().equals(context)));
         // when
         context.start();
         // then
-        verify(started).accept(argThat(event -> event.getSource().equals(context)));
+        inOrder.verify(started).accept(argThat(e -> e.getSource().equals(context)));
         // when
         context.stop();
         // then
-        verify(stopped).accept(argThat(event -> event.getSource().equals(context)));
+        inOrder.verify(stopped).accept(argThat(e -> e.getSource().equals(context)));
         // when
         context.close();
         // then
-        verify(closed).accept(argThat(event -> event.getSource().equals(context)));
+        inOrder.verify(closed).accept(argThat(e -> e.getSource().equals(context)));
+        inOrder.verifyNoMoreInteractions();
+        verifyNoMoreInteractions(refreshed, started, stopped, closed);
     }
 }

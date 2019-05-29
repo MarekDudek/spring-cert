@@ -15,41 +15,41 @@ import java.util.function.Consumer;
 abstract class EventsConfig
 {
     @Bean
-    ApplicationListener<ContextRefreshedEvent> refreshedListener(final Consumer<ContextRefreshedEvent> refreshedConsumer)
+    ApplicationListener<ContextRefreshedEvent> refreshedListener(final Consumer<ContextRefreshedEvent> refreshed)
     {
-        return refreshedConsumer::accept;
+        return refreshed::accept;
     }
 
     @Bean
-    ApplicationListener<ContextStartedEvent> startedListener(final Consumer<ContextStartedEvent> startedConsumer)
+    ApplicationListener<ContextStartedEvent> startedListener(final Consumer<ContextStartedEvent> started)
     {
-        return startedConsumer::accept;
+        return started::accept;
     }
 
     @Bean
-    ApplicationListener<ContextStoppedEvent> stoppedListener(final Consumer<ContextStoppedEvent> stoppedConsumer)
+    ApplicationListener<ContextStoppedEvent> stoppedListener(final Consumer<ContextStoppedEvent> stopped)
     {
-        return stoppedConsumer::accept;
+        return stopped::accept;
     }
 
     @Bean
-    ApplicationListener<ContextClosedEvent> closedListener(final Consumer<ContextClosedEvent> closedConsumer)
+    ApplicationListener<ContextClosedEvent> closedListener(final Consumer<ContextClosedEvent> closed)
     {
-        return closedConsumer::accept;
+        return closed::accept;
     }
 
 
     @Lookup
-    abstract Consumer<ContextRefreshedEvent> refreshedConsumer();
+    abstract Consumer<ContextRefreshedEvent> refreshed();
 
     @Lookup
-    abstract Consumer<ContextStartedEvent> startedConsumer();
+    abstract Consumer<ContextStartedEvent> started();
 
     @Lookup
-    abstract Consumer<ContextStoppedEvent> stoppedConsumer();
+    abstract Consumer<ContextStoppedEvent> stopped();
 
     @Lookup
-    abstract Consumer<ContextClosedEvent> closedConsumer();
+    abstract Consumer<ContextClosedEvent> closed();
 
 
     @Bean
