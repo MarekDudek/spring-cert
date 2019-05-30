@@ -16,6 +16,7 @@ import org.springframework.context.event.ContextStoppedEvent;
 
 import java.util.function.Consumer;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.*;
 
@@ -24,8 +25,10 @@ final class EventsTest
 {
     @Autowired
     private ApplicationEventPublisher publisher;
+
     @MockBean
     private ApplicationListener<SomeEvent> listener;
+
 
     @Test
     void test()
@@ -81,4 +84,39 @@ final class EventsTest
             definition ->
             {
             };
+
+    @Test
+    void annotation_based_event_listeners()
+    {
+        // given
+        final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        context.register(EventsConfig.class);
+        context.register(Monitoring.class);
+        // when
+        context.refresh();
+        final Monitoring monitoring = context.getBean(Monitoring.class);
+        // then
+        assertThat(monitoring).extracting(m -> m.ready).isEqualTo(true);
+        assertThat(monitoring).extracting(m -> m.running).isEqualTo(false);
+        // when
+        context.start();
+        // then
+        assertThat(monitoring).extracting(m -> m.running).isEqualTo(true);
+        // when
+        context.stop();
+        // then
+        assertThat(monitoring).extracting(m -> m.running).isEqualTo(false);
+        // when
+        context.start();
+        // then
+        assertThat(monitoring).extracting(m -> m.running).isEqualTo(true);
+        // when
+        context.stop();
+        // then
+        assertThat(monitoring).extracting(m -> m.running).isEqualTo(false);
+        // when
+        context.close();
+        // then
+        assertThat(monitoring).extracting(m -> m.ready).isEqualTo(false);
+    }
 }
