@@ -19,6 +19,7 @@ import java.util.function.Consumer;
 import static com.marekdudek.springcert.events.Monitoring.Status.After;
 import static com.marekdudek.springcert.events.Monitoring.Status.During;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.*;
 
@@ -154,5 +155,63 @@ final class EventsTest
         context.stop();
         context.close();
         assertThat(listener.events).isEqualTo(2);
+    }
+
+    @Test
+    void errorous_listener()
+    {
+        // given
+        final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        context.register(EventsConfig.class);
+        context.register(RichListener.class);
+        context.refresh();
+        context.start();
+        // when
+        final Throwable error = catchThrowable(() ->
+                context.publishEvent(new SomeEvent(context, "this is an error"))
+        );
+        // then
+        assertThat(error).isInstanceOf(RuntimeException.class).hasMessageContaining("mistake");
+        //
+        context.stop();
+        context.close();
+    }
+
+    @Test
+    void asynchronous_listener()
+    {
+        // given
+        final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        context.register(EventsConfig.class);
+        context.register(RichListener.class);
+        context.refresh();
+        final RichListener listener = context.getBean(RichListener.class);
+        // when
+        context.start();
+        context.publishEvent(new SomeEvent(context, "this is asynchronous event"));
+        context.stop();
+        context.close();
+        assertThat(listener.asynchronous).isEqualTo(1);
+    }
+
+    @Test
+    void errorous_asynchronous_listener()
+    {
+        // given
+        final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        context.register(EventsConfig.class);
+        context.register(RichListener.class);
+        context.refresh();
+        context.start();
+        // then
+        // TODO: async errors should not be propagated, perhaps in test only they do
+        final Throwable error = catchThrowable(() ->
+                context.publishEvent(new SomeEvent(context, "this is oopsie"))
+        );
+        // then
+        assertThat(error).isInstanceOf(RuntimeException.class).hasMessageContaining("asynchronous");
+        //
+        context.stop();
+        context.close();
     }
 }
