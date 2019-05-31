@@ -16,6 +16,8 @@ import org.springframework.context.event.ContextStoppedEvent;
 
 import java.util.function.Consumer;
 
+import static com.marekdudek.springcert.events.Monitoring.Status.After;
+import static com.marekdudek.springcert.events.Monitoring.Status.During;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.*;
@@ -96,7 +98,7 @@ final class EventsTest
         context.refresh();
         final Monitoring monitoring = context.getBean(Monitoring.class);
         // then
-        assertThat(monitoring).extracting(m -> m.ready).isEqualTo(true);
+        assertThat(monitoring).extracting(m -> m.status).isEqualTo(During);
         assertThat(monitoring).extracting(m -> m.running).isEqualTo(false);
         // when
         context.start();
@@ -117,6 +119,6 @@ final class EventsTest
         // when
         context.close();
         // then
-        assertThat(monitoring).extracting(m -> m.ready).isEqualTo(false);
+        assertThat(monitoring).extracting(m -> m.status).isEqualTo(After);
     }
 }
