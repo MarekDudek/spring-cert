@@ -19,6 +19,7 @@ final class Monitoring
 
     Status status = Before;
     boolean running = false;
+    int events = 0;
 
     @EventListener
     public void refreshed(final ContextRefreshedEvent event)
@@ -46,5 +47,23 @@ final class Monitoring
     {
         checkArgument(status == During);
         status = After;
+    }
+
+    @EventListener(
+            {
+                    ContextRefreshedEvent.class,
+                    ContextStartedEvent.class,
+                    ContextStoppedEvent.class,
+                    ContextClosedEvent.class
+            })
+    public void all(final ApplicationContextEvent event)
+    {
+        events++;
+    }
+
+    @EventListener(condition = "#event.content.startsWith('hello')")
+    public void someEvent(final SomeEvent event)
+    {
+        events++;
     }
 }

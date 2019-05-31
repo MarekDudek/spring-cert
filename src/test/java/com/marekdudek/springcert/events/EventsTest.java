@@ -36,7 +36,7 @@ final class EventsTest
     void test()
     {
         // given
-        final SomeEvent event = new SomeEvent(publisher);
+        final SomeEvent event = new SomeEvent(publisher, "some content");
         // when
         publisher.publishEvent(event);
         // then
@@ -97,6 +97,7 @@ final class EventsTest
         // when
         context.refresh();
         final Monitoring monitoring = context.getBean(Monitoring.class);
+        context.publishEvent(new SomeEvent(context, "hello, world"));
         // then
         assertThat(monitoring).extracting(m -> m.status).isEqualTo(During);
         assertThat(monitoring).extracting(m -> m.running).isEqualTo(false);
@@ -120,5 +121,6 @@ final class EventsTest
         context.close();
         // then
         assertThat(monitoring).extracting(m -> m.status).isEqualTo(After);
+        assertThat(monitoring.events).isEqualTo(7);
     }
 }
