@@ -19,51 +19,32 @@ final class Monitoring
 
     Status status = Before;
     boolean running = false;
-    int events = 0;
 
     @EventListener
-    public void refreshed(final ContextRefreshedEvent event)
+    public void refreshed(final @SuppressWarnings("unused") ContextRefreshedEvent event)
     {
         checkArgument(status == Before);
         status = During;
     }
 
     @EventListener
-    public void started(final ContextStartedEvent event)
+    public void started(final @SuppressWarnings("unused") ContextStartedEvent event)
     {
         checkArgument(isFalse(running));
         running = true;
     }
 
     @EventListener
-    public void stopped(final ContextStoppedEvent event)
+    public void stopped(final @SuppressWarnings("unused") ContextStoppedEvent event)
     {
         checkArgument(running);
         running = false;
     }
 
     @EventListener
-    public void closed(final ContextClosedEvent event)
+    public void closed(final @SuppressWarnings("unused") ContextClosedEvent event)
     {
         checkArgument(status == During);
         status = After;
-    }
-
-    @EventListener(
-            {
-                    ContextRefreshedEvent.class,
-                    ContextStartedEvent.class,
-                    ContextStoppedEvent.class,
-                    ContextClosedEvent.class
-            })
-    public void all(final ApplicationContextEvent event)
-    {
-        events++;
-    }
-
-    @EventListener(condition = "#event.content.startsWith('hello')")
-    public void someEvent(final SomeEvent event)
-    {
-        events++;
     }
 }

@@ -1,9 +1,7 @@
 package com.marekdudek.springcert.events;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.boot.SpringBootConfiguration;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.ContextClosedEvent;
@@ -42,15 +40,19 @@ abstract class EventsConfig
 
 
     @Lookup
+    @SuppressWarnings("unused")
     abstract Consumer<ContextRefreshedEvent> refreshed();
 
     @Lookup
+    @SuppressWarnings("unused")
     abstract Consumer<ContextStartedEvent> started();
 
     @Lookup
+    @SuppressWarnings("unused")
     abstract Consumer<ContextStoppedEvent> stopped();
 
     @Lookup
+    @SuppressWarnings("unused")
     abstract Consumer<ContextClosedEvent> closed();
 
 
@@ -61,9 +63,6 @@ abstract class EventsConfig
         {
         };
     }
-
-
-
 
 
 }

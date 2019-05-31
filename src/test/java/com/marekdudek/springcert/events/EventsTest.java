@@ -97,7 +97,6 @@ final class EventsTest
         // when
         context.refresh();
         final Monitoring monitoring = context.getBean(Monitoring.class);
-        context.publishEvent(new SomeEvent(context, "hello, world"));
         // then
         assertThat(monitoring).extracting(m -> m.status).isEqualTo(During);
         assertThat(monitoring).extracting(m -> m.running).isEqualTo(false);
@@ -121,6 +120,39 @@ final class EventsTest
         context.close();
         // then
         assertThat(monitoring).extracting(m -> m.status).isEqualTo(After);
-        assertThat(monitoring.events).isEqualTo(7);
+    }
+
+    @Test
+    void multi_event_listener()
+    {
+        // given
+        final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        context.register(EventsConfig.class);
+        context.register(MultiEventListener.class);
+        context.refresh();
+        final MultiEventListener listener = context.getBean(MultiEventListener.class);
+        // when
+        context.start();
+        context.stop();
+        context.close();
+        // then
+        assertThat(listener.events).isEqualTo(4);
+    }
+
+    @Test
+    void filtering_listener()
+    {
+        // given
+        final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        context.register(EventsConfig.class);
+        context.register(RichListener.class);
+        context.refresh();
+        final RichListener listener = context.getBean(RichListener.class);
+        // when
+        context.start();
+        context.publishEvent(new SomeEvent(context, "hello, world"));
+        context.stop();
+        context.close();
+        assertThat(listener.events).isEqualTo(2);
     }
 }
