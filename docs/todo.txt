@@ -6,3 +6,4 @@ Autowiring by name, type, constructor
 Bean priority, qualifiers and overriding
 Lazy initialization
 Bean dependency
+How to limit config search in test?
