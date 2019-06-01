@@ -10,21 +10,26 @@ import static java.lang.System.out;
 
 @Aspect
 @Component
-final class NotVeryUsefulAspect
+final class TestAspect
 {
-    @Pointcut("execution(* method*(..))")
-    public void somePointcut()
+    @Pointcut("execution(* *(..))")
+    void everyMethod()
     {
     }
 
-    @Before("somePointcut()")
-    public void beforeSomePointcut()
+    @Pointcut("within(com.marekdudek.springcert.aspects.*)")
+    void aspectsPackage()
+    {
+    }
+
+    @Before("everyMethod() && aspectsPackage()")
+    void beforeEveryMethod()
     {
         out.println("before");
     }
 
-    @After("somePointcut()")
-    public void afterSomePointcut()
+    @After("everyMethod() && aspectsPackage()")
+    void afterEveryMethod()
     {
         out.println("after");
     }

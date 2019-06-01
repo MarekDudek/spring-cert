@@ -9,6 +9,6 @@ class SomeComponent
 {
     void method1()
     {
-        out.println("method 1 executing");
+        out.println("method 1");
     }
 }
