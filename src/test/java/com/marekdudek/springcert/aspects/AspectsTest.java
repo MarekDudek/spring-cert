@@ -18,6 +18,8 @@ final class AspectsTest
 {
     @Autowired
     private SomeComponent component;
+    @Autowired
+    private OtherComponent other;
 
     private final ByteArrayOutputStream outStream = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errStream = new ByteArrayOutputStream();
@@ -40,11 +42,30 @@ final class AspectsTest
     }
 
     @Test
-    void test()
+    void some_component()
     {
         // when
         component.method1();
         // then
         assertThat(outStream.toString()).isEqualTo("before\nmethod 1\nafter\n");
+    }
+
+    @Test
+    void other_component()
+    {
+        // when
+        other.method();
+        // then
+        assertThat(outStream.toString()).isEqualTo("other-component.method\n");
+    }
+
+    @Test
+    void around_advice()
+    {
+        // when
+        final int value = other.stringParameter("some param");
+        // then
+        assertThat(value).isEqualTo(10);
+        assertThat(outStream.toString()).isEqualTo("pre\nsome param\npost\n");
     }
 }
