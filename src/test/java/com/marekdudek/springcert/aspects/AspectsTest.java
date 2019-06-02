@@ -56,7 +56,7 @@ final class AspectsTest
         // when
         other.method();
         // then
-        assertThat(outStream.toString()).isEqualTo("other-component.method\n");
+        assertThat(outStream.toString()).isEqualTo(" start \nother-component.method\n finish \n");
     }
 
     @Test

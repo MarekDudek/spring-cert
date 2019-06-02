@@ -20,6 +20,11 @@ final class SomeAspect
     {
     }
 
+    @Pointcut("@within(SomeAnnotation)")
+    void typesWithSomeAnnotation()
+    {
+    }
+
     @Pointcut("this(SomeComponent)")
     void someComponentBeanReference()
     {
@@ -30,8 +35,18 @@ final class SomeAspect
     {
     }
 
+    @Pointcut("@target(SomeAnnotation)")
+    void someAnnotationTargetObject()
+    {
+    }
+
     @Pointcut("args(String)")
     void stringOrVoid()
+    {
+    }
+
+    @Pointcut("@annotation(SomeAnnotation)")
+    void methodsWithSomeAnnotation()
     {
     }
 
@@ -47,7 +62,7 @@ final class SomeAspect
         out.println("after");
     }
 
-    @Around("stringOrVoid() && aspectsPackage()")
+    @Around("stringOrVoid() && aspectsPackage() && someAnnotationTargetObject() && typesWithSomeAnnotation() && methodsWithSomeAnnotation()")
     Object upperCaseAndDoubleLength(final ProceedingJoinPoint joinPoint) throws Throwable
     {
         final Object[] args = joinPoint.getArgs();
@@ -63,5 +78,14 @@ final class SomeAspect
         final int length = (int) result;
 
         return 2 * length;
+    }
+
+    @Around("methodsWithSomeAnnotation() && aspectsPackage() && execution(void method())")
+    Object aroundActions(final ProceedingJoinPoint joinPoint) throws Throwable
+    {
+        out.println(" start ");
+        final Object value = joinPoint.proceed();
+        out.println(" finish ");
+        return value;
     }
 }
