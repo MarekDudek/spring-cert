@@ -48,11 +48,20 @@ final class SomeAspect
     }
 
     @Around("stringOrVoid() && aspectsPackage()")
-    Object aroundStringOrVoid(final ProceedingJoinPoint joinPoint) throws Throwable
+    Object upperCaseAndDoubleLength(final ProceedingJoinPoint joinPoint) throws Throwable
     {
-        out.println("pre");
-        final Object value = joinPoint.proceed();
-        out.println("post");
-        return value;
+        final Object[] args = joinPoint.getArgs();
+        final String param = (String) args[0];
+        final Object[] changed = new Object[]{param.toUpperCase()};
+
+        out.println(" pre ");
+
+        final Object result = joinPoint.proceed(changed);
+
+        out.println(" post ");
+
+        final int length = (int) result;
+
+        return 2 * length;
     }
 }

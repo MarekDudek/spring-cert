@@ -12,9 +12,9 @@ class OtherComponent
         out.println("other-component.method");
     }
 
-    int stringParameter(final String parameter)
+    int printAndGetLength(final String string)
     {
-        out.println(parameter);
-        return parameter.length();
+        out.println(string);
+        return string.length();
     }
 }

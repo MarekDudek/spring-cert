@@ -63,9 +63,9 @@ final class AspectsTest
     void around_advice()
     {
         // when
-        final int value = other.stringParameter("some param");
+        final int value = other.printAndGetLength("some param");
         // then
-        assertThat(value).isEqualTo(10);
-        assertThat(outStream.toString()).isEqualTo("pre\nsome param\npost\n");
+        assertThat(value).isEqualTo(20);
+        assertThat(outStream.toString()).isEqualTo(" pre \nSOME PARAM\n post \n");
     }
 }
