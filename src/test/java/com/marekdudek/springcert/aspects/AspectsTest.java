@@ -47,7 +47,7 @@ final class AspectsTest
         // when
         component.method1();
         // then
-        assertThat(outStream.toString()).isEqualTo("before\nmethod 1\nafter\n");
+        assertThat(outStream.toString()).isEqualTo("before method1\nmethod 1\nafter method1\n");
     }
 
     @Test

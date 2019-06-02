@@ -1,9 +1,11 @@
 package com.marekdudek.springcert.aspects;
 
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.System.out;
 
 @Aspect
@@ -51,15 +53,25 @@ final class SomeAspect
     }
 
     @Before("everyMethod() && aspectsPackage() && someComponentBeanReference() && someComponentTargetObject()")
-    void beforeEveryMethod()
+    void beforeEveryMethod(final JoinPoint joinPoint)
     {
-        out.println("before");
+        final String methodName = joinPoint.getSignature().getName();
+        out.println("before " + methodName);
     }
 
     @After("everyMethod() && aspectsPackage() && someComponentBeanReference() && someComponentTargetObject()")
-    void afterEveryMethod()
+    void afterEveryMethod(final JoinPoint joinPoint)
     {
-        out.println("after");
+        final String methodName = joinPoint.getSignature().getName();
+        out.println("after " + methodName);
+    }
+
+    @AfterReturning(value = "aspectsPackage() && methodsWithSomeAnnotation() && execution(int *(String))", returning = "retVal")
+    void afterMethodWithSomeAnnotation(final JoinPoint joinPoint, final int retVal)
+    {
+        checkArgument(retVal % 2 == 0);
+        final String methodName = joinPoint.getSignature().getName();
+        checkArgument(methodName.equals("printAndGetLength"));
     }
 
     @Around("stringOrVoid() && aspectsPackage() && someAnnotationTargetObject() && typesWithSomeAnnotation() && methodsWithSomeAnnotation()")
